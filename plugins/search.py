@@ -41,7 +41,7 @@ async def search(bot, message):
     if message.text.startswith("/"):
        return    
     query   = message.text 
-    head    = f"<u>⭕ Here is the results {message.from_user.mention} 👇\n\n💢 Powered By </u> <b><I>@VJ_Botz ❗</I></b>\n\n"
+    head    = f"<u>⭕ Raj says Here is the results {message.from_user.mention} 👇\n\n💢 Powered By </u> <b><I>@VJ_Botz ❗</I></b>\n\n"
     results = ""
     try:
        for channel in channels:
@@ -49,14 +49,14 @@ async def search(bot, message):
                name = (msg.text or msg.caption).split("\n")[0]
                if name in results:
                   continue 
-               results += f"<b><I>♻️ {name}\n🔗 {msg.link}</I></b>\n\n"                                                      
+               results += f"<b><I>Raj♻️ {name}\n🔗 {msg.link}</I></b>\n\n"                                                      
        if bool(results)==False:
           movies = await search_imdb(query)
           buttons = []
           for movie in movies: 
               buttons.append([InlineKeyboardButton(movie['title'], callback_data=f"recheck_{movie['id']}")])
-          msg = await message.reply_photo(photo="https://graph.org/file/c361a803c7b70fc50d435.jpg",
-                                          caption="<b><I>🔻 I Couldn't find anything related to Your Query😕.\n🔺 Did you mean any of these?</I></b>", 
+          msg = await message.reply_photo(photo="https://envs.sh/v3T.jpg",
+                                          caption="<b><I>🔻 Raj says I Couldn't find anything related to Your Query😕.\n🔺 Did you mean any of these?</I></b>", 
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
           await send_message_in_chunks(bot, message.chat.id, head+results)
@@ -78,9 +78,9 @@ async def recheck(bot, update):
     except:
        return await update.message.delete(2)       
     if clicked != typed:
-       return await update.answer("That's not for you! 👀", show_alert=True)
+       return await update.answer("Raj says That's not for you! 👀", show_alert=True)
 
-    m=await update.message.edit("**Searching..💥**")
+    m=await update.message.edit("**Raj Searching..💥**")
     id      = update.data.split("_")[-1]
     query   = await search_imdb(id)
     channels = (await get_group(update.message.chat.id))["channels"]
@@ -92,7 +92,7 @@ async def recheck(bot, update):
                name = (msg.text or msg.caption).split("\n")[0]
                if name in results:
                   continue 
-               results += f"<b><I>♻️🍿 {name}</I></b>\n\n🔗 {msg.link}</I></b>\n\n"
+               results += f"<b><I>Raj♻️🍿 {name}</I></b>\n\n🔗 {msg.link}</I></b>\n\n"
        if bool(results)==False:          
           return await update.message.edit("🔺 Still no results found! Please Request To Group Admin 🔻", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎯 Request To Admin 🎯", callback_data=f"request_{id}")]]))
        await send_message_in_chunks(bot, update.message.chat.id, head+results)
